@@ -5,6 +5,9 @@ import java.time.LocalDate;
 import java.util.Date;
 import java.util.Objects;
 
+/**
+ * музыкальные группы
+ */
 public class MusicBand implements Comparable<MusicBand>{
     private Integer id; //Поле не может быть null, Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
     private String name; //Поле не может быть null, Строка не может быть пустой
@@ -22,6 +25,16 @@ public class MusicBand implements Comparable<MusicBand>{
         last++;
         creationDate = new Date();
     }
+
+    /**
+     * Constructor MusicBand
+     * @param name название группы, не может быть null, Строка не может быть пустой
+     * @param coordinates координаты, не может быть null
+     * @param numberOfParticipants Колличество участников группы. Значение поля должно быть больше 0
+     * @param establishmentDate Дата создания группы. Поле может быть null
+     * @param genre Музыкальный жанр группы. Поле может быть null
+     * @param frontMan Фронтмен. Поле не может быть null
+     */
     public MusicBand(String name, Coordinates coordinates, int numberOfParticipants, java.time.LocalDate establishmentDate,MusicGenre genre, Person frontMan) {
         this.name = name;
         this.coordinates = coordinates;

@@ -15,10 +15,24 @@ import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.Scanner;
 
+/**
+ * Работает с файлами
+ * @author Gurin Minu
+ * @version 0
+ * @since 0
+ */
 public class FileManager {
+    /**
+     * Constructor FileManager
+     */
     public FileManager() {
     }
 
+    /**
+     * Читает xml файл, и возвращает коллекцию MusicBand из этого файла
+     * @param file xml файл, в котором находится коллекция
+     * @return Коллекция MusicBand
+     */
     public static LinkedHashSet<MusicBand> readFile(File file) {
         StringBuilder xml = new StringBuilder();
         Scanner scanner = null;
@@ -46,6 +60,10 @@ public class FileManager {
         return musicBands;
     }
 
+    /**
+     * Сохраняет коллекцию в изначальный xml файл
+     * @param musicBands Коллекция
+     */
     public static void saveFile(LinkedHashSet musicBands) {
         XmlMapper mapper = new XmlMapper();
         mapper.registerModule(new JavaTimeModule())

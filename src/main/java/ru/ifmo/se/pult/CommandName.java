@@ -1,5 +1,8 @@
 package ru.ifmo.se.pult;
 
+/**
+ * enum комманд
+ */
 public enum CommandName{
     ADD("add"),
     SHOW("show"),

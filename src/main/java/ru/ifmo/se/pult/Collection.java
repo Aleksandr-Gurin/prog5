@@ -6,19 +6,35 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedHashSet;
 
+/**
+ * Класс, управляющий коллекцией
+ */
 public class Collection {
     private LinkedHashSet<MusicBand> musicBands;
 
     private Date initDate = new Date();
 
+    /**
+     * Constructor collection
+     * @param musicBands Коллекция, которой управляет класс
+     */
     public Collection(LinkedHashSet<MusicBand> musicBands) {
         this.musicBands = musicBands;
     }
 
+    /**
+     * Добавляет элемент в коллекцию
+     * @param musicBand Добавляемый элемент
+     */
     public void add(MusicBand musicBand) {
         musicBands.add(musicBand);
     }
 
+    /**
+     * Обновляет значения элемента в коллекции
+     * @param id id, обновляемого элемента
+     * @param mb Объект, который содержит значения, кторые должен принять обновляемый элемент
+     */
     public void update(int id, MusicBand mb) {
         for(MusicBand musicBand: musicBands){
             if (musicBand.getId() == id) {
@@ -32,6 +48,10 @@ public class Collection {
         }
     }
 
+    /**
+     * Удаляет элемент коллекции
+     * @param id id, удаляемого элемента
+     */
     public void remove(int id) {
         MusicBand musicBand = null;
         boolean flag = true;
@@ -49,6 +69,10 @@ public class Collection {
         }
     }
 
+    /**
+     * Удаляет элементы коллекции, которые больше данного
+     * @param musicBand Объект, с которым сравниваются элементы коллекции
+     */
     public void removeGreater(MusicBand musicBand){
         ArrayList<MusicBand> deleted = new ArrayList<>();
         for (MusicBand mb : musicBands) {
@@ -63,6 +87,10 @@ public class Collection {
         }
     }
 
+    /**
+     * Удаляет элементы коллекции, которые меньше данного
+     * @param musicBand Объект, с которым сравниваются элементы коллекции
+     */
     public void removeLower(MusicBand musicBand) {
         ArrayList<MusicBand> deleted = new ArrayList<>();
         for (MusicBand mb : musicBands) {
@@ -77,14 +105,25 @@ public class Collection {
         }
     }
 
+    /**
+     * Удаляет все элементы коллекции
+     */
     public void clear() {
         musicBands.clear();
     }
 
+    /**
+     * Возвращает дату инициализации коллекции
+     * @return Date
+     */
     public Date getInitDate() {
         return initDate;
     }
 
+    /**
+     * Возвращает коллекцию
+     * @return LinkedHashSet
+     */
     public LinkedHashSet<MusicBand> getCollection(){
         return musicBands;
     }

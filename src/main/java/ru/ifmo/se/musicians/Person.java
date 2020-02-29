@@ -3,6 +3,9 @@ package ru.ifmo.se.musicians;
 import java.awt.*;
 import java.util.Objects;
 
+/**
+ * Человек
+ */
 public class Person {
     private String name; //Поле не может быть null, Строка не может быть пустой
     private Double height; //Поле не может быть null, Значение поля должно быть больше 0
@@ -12,6 +15,14 @@ public class Person {
 
     public Person(){};
 
+    /**
+     * Конструктор человека
+     * @param name имя человек, не может быть null, Строка не может быть пустой
+     * @param height рост человека, не может быть null, Значение поля должно быть больше 0
+     * @param eyeColor цвет глаз, может быть null
+     * @param hairColor цвет волос, может быть null
+     * @param nationality национальность, может быть null
+     */
     public Person(String name, Double height, Color eyeColor, Color hairColor, Country nationality){
         this.name = name;
         this.height = height;

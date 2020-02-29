@@ -4,23 +4,31 @@ import ru.ifmo.se.musicians.*;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.DateTimeException;
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.Locale;
 import java.util.Scanner;
 
+/**
+ * @author Gurin Minu
+ * @version 0
+ */
 public class Reader {
     private static File scriptName;
     private static Integer argument;
     private static File startFile;
 
+    /**
+     * Constructor Reader
+     * @param in Scanner
+     */
     public Reader(Scanner in) {
     }
 
+    /**
+     * Обрабатывает данные введенные пользователкм и возвращает команду
+     * @param in Scanner
+     * @return CommandName
+     */
     public static CommandName readCommand(Scanner in) {
         String command = in.nextLine();
         String[] mas = command.split("\\s");
@@ -66,14 +74,27 @@ public class Reader {
         }
     }
 
+    /**
+     * Возвращает введенные пользователем численные аргументы
+     * @return int
+     */
     public static int readArgument(){
         return argument;
     }
 
+    /**
+     * Возвращает файл скрипта, путь к которому ввел пользователь
+     * @return File
+     */
     public static File readScriptName() {
         return scriptName;
     }
 
+    /**
+     * Возвращает изначачальный файл, путь к которому указал пользователь
+     * @param in Scanner
+     * @return File
+     */
     public static File readFile(Scanner in) {
         System.out.println("Введите путь к файлу: ");
         String path = in.nextLine();
@@ -93,6 +114,11 @@ public class Reader {
         return startFile;
     }
 
+    /**
+     * Возвращает объект, поля которых указывает пользователь
+     * @param in Scanner
+     * @return MusicBand
+     */
     public static MusicBand readCollectionObject(Scanner in) {
         //name
         System.out.println("Введите имя группы: ");
@@ -397,6 +423,10 @@ public class Reader {
         return new MusicBand(name, new Coordinates(x, y), nop, date, genre, new Person(frname, height, eyeColor, hairColor, nat));
     }
 
+    /**
+     * Возвращает изначальный файл
+     * @return File
+     */
     public static File getStartFile() {
         return startFile;
     }

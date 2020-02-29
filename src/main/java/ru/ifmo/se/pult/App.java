@@ -5,16 +5,25 @@ import ru.ifmo.se.musicians.*;
 import java.io.*;
 import java.util.*;
 
-//Receiver
+/**
+ * Receiver
+ * Хранит исполнения команд
+ */
 public class App {
-    Collection collection;
+    private Collection collection;
     private List<String> history = new ArrayList<>();
 
-    public App(Collection collection) throws FileNotFoundException, IOException {
+    /**
+     * Constructor App
+     * @param collection Класс, управляющий коллекцией
+     */
+    public App(Collection collection) {
         this.collection = collection;
     }
 
-
+    /**
+     * Выводит справку по доступным командам
+     */
     public void help() {
         System.out.println("help : вывести справку по доступным командам\n" +
                 "info : вывести в стандартный поток вывода информацию о коллекции (тип, дата инициализации, количество элементов и т.д.)\n" +
@@ -35,11 +44,17 @@ public class App {
         history.add("help");
     }
 
+    /**
+     * Выводит в стандартный поток вывода информацию о коллекции (тип, дата инициализации, количество элементов и т.д.)
+     */
     public void info() {
         System.out.println("Тип: " + collection.getCollection().getClass() + "\nДата инициализации: " + collection.getInitDate() + "\nКоличество элементов: " + collection.getCollection().size());
         history.add("info");
     }
 
+    /**
+     * Выводит в стандартный поток вывода все элементы коллекции в строковом представлении
+     */
     public void show() {
         for (MusicBand musicBand: collection.getCollection()){
             System.out.println(musicBand.toString());
@@ -47,13 +62,19 @@ public class App {
         history.add("show");
     }
 
+    /**
+     * Добавляет новый элемент в коллекцию
+     * @param musicBand добавляемый элемент
+     */
     public void add(MusicBand musicBand) {
         collection.add(musicBand);
         history.add("add");
     }
 
-
-    //update
+    /**
+     * Обновляет значение элемента коллекции, id которого равен заданному
+     * @param ip id элемента
+     */
     public void updateId(Integer ip) {
         boolean flag = true;
         for (MusicBand musicBand : collection.getCollection()) {
@@ -68,22 +89,35 @@ public class App {
         history.add("update");
     }
 
+    /**
+     * Удаляет элемент из коллекции по его id
+     * @param id id, удаляемого элемента
+     */
     public void removeById(Integer id) {
         collection.remove(id);
         history.add("remove_by_id");
     }
 
+    /**
+     * Очищает коллекцию
+     */
     public void clear() {
         collection.clear();
         System.out.println("Коллекция очищена");
         history.add("clear");
     }
 
+    /**
+     * Сохраняет коллекцию в файл
+     */
     public void save() {
         FileManager.saveFile(collection.getCollection());
         history.add("save");
     }
 
+    /**
+     * Считывает и исполняет скрипт из указанного файла. В скрипте содержатся команды в таком же виде, в котором их вводит пользователь в интерактивном режиме.
+     */
     public void executeScript() {
         BufferedInputStream in1 = null;
         try {
@@ -94,16 +128,25 @@ public class App {
         System.setIn(in1);
     }
 
+    /**
+     * Удаляет из коллекции все элементы, меньшие, чем заданный
+     */
     public void removeGreater() {
         collection.removeGreater(Reader.readCollectionObject(new Scanner(System.in)));
         history.add("remove_greater");
     }
 
+    /**
+     * Удаляет из коллекции все элементы, меньшие, чем заданный
+     */
     public void removeLower() {
         collection.removeLower(Reader.readCollectionObject(new Scanner(System.in)));
         history.add("remove_lower");
     }
 
+    /**
+     * Выводит последние 5 команд (без их аргументов)
+     */
     public void history() {
         if (history.size() < 5) {
             for (String command : history) {
@@ -117,6 +160,9 @@ public class App {
         history.add("history");
     }
 
+    /**
+     * Выводит любой объект из коллекции, значение поля genre которого является максимальным
+     */
     public void maxByGenre() {
         MusicGenre musicGenre = MusicGenre.BLUES;
         for (MusicGenre mg : MusicGenre.values()) {
@@ -138,6 +184,10 @@ public class App {
         history.add("max_by_genre");
     }
 
+    /**
+     * Выводит элементы, значение поля numberOfParticipants которых меньше заданного
+     * @param nop numberOfParticipants
+     */
     public void filterLessThanNumberOfParticipants(int nop) {
         for (MusicBand musicBand : collection.getCollection()) {
             if (musicBand.getNumberOfParticipants() < nop) {
@@ -147,6 +197,9 @@ public class App {
         history.add("filter_less_than_number_of_participants");
     }
 
+    /**
+     * Выводит элементы коллекции в порядке убывания
+     */
     public void printDescending() {
         MusicBand mb = null;
         ArrayList<MusicBand> musicBands = new ArrayList<>();
@@ -168,6 +221,9 @@ public class App {
         history.add("print_descending");
     }
 
+    /**
+     * Завершает программу (без сохранения в файл)
+     */
     public void exit() {
     }
 }
