@@ -44,6 +44,7 @@ public class MusicBand implements Comparable<MusicBand>{
         this.frontMan = frontMan;
     }
 
+
     public Coordinates getCoordinates() {
         return coordinates;
     }
