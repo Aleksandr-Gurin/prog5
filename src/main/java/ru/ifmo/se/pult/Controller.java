@@ -8,7 +8,6 @@ import java.util.regex.Pattern;
 //Invoker
 public class Controller {
     private final HashMap<Pattern, Command> commandMap = new HashMap<>();
-    Reader reader;
     Command help;
     Command info;
     Command show;
@@ -26,8 +25,7 @@ public class Controller {
     Command filterLessThan;
     Command printDescending;
 
-    public Controller(Reader reader, Command help, Command info, Command show, Command add, Command updateId, Command removeById, Command clear, Command save, Command executeScript, Command exit, Command removeGreater, Command removeLower, Command history, Command maxByGenre, Command filterLessThan, Command printDescending) {
-        this.reader = reader;
+    public Controller(Command help, Command info, Command show, Command add, Command updateId, Command removeById, Command clear, Command save, Command executeScript, Command exit, Command removeGreater, Command removeLower, Command history, Command maxByGenre, Command filterLessThan, Command printDescending) {
         this.help = help;
         this.info = info;
         this.show = show;
@@ -49,11 +47,10 @@ public class Controller {
     public void start(InputStream inputStream) throws ParseException {
         boolean exitFlag = true;
         Scanner in = new Scanner(inputStream);
-        reader.setIn(in);
 
         while (exitFlag && in.hasNextLine()) {
 
-            CommandName command = reader.readCommand();
+            CommandName command = Reader.readCommand(in);
 
             switch (command) {
                 case HELP:
@@ -63,16 +60,16 @@ public class Controller {
                     info.execute("");
                     break;
                 case UPDATE:
-                    update.execute(reader.readArgument());
+                    update.execute(Reader.readArgument());
                     break;
                 case REMOVE_BY_ID:
-                    removeById.execute(reader.readArgument());
+                    removeById.execute(Reader.readArgument());
                     break;
                 case FILTER_LESS_THEN_NUMBER_OF_PARTICIPANTS:
-                    filterLessThan.execute(reader.readArgument());
+                    filterLessThan.execute(Reader.readArgument());
                     break;
                 case ADD:
-                    add.execute(reader.readCollectionObject());
+                    add.execute(Reader.readCollectionObject(in));
                     break;
                 case REMOVE_LOWER:
                     removeLower.execute("");
@@ -82,7 +79,7 @@ public class Controller {
                     break;
                 case EXECUTE_SCRIPT:
                     try {
-                        InputStream fileInputStream = new FileInputStream(reader.readScriptName());
+                        InputStream fileInputStream = new FileInputStream(Reader.readScriptName());
                         this.start(fileInputStream);
                         fileInputStream.close();
                     } catch (NoSuchElementException ex) {

@@ -11,7 +11,7 @@ public class MusicBand implements Comparable<MusicBand>{
     private Coordinates coordinates; //Поле не может быть null
     private java.util.Date creationDate; //Поле не может быть null, Значение этого поля должно генерироваться автоматически
     private int numberOfParticipants; //Значение поля должно быть больше 0
-    private java.util.Date establishmentDate; //Поле может быть null
+    private java.time.LocalDate establishmentDate; //Поле может быть null
     private MusicGenre genre; //Поле может быть null
     private Person frontMan; //Поле не может быть null
     public MusicBand(){};
@@ -22,7 +22,7 @@ public class MusicBand implements Comparable<MusicBand>{
         last++;
         creationDate = new Date();
     }
-    public MusicBand(String name, Coordinates coordinates, int numberOfParticipants, java.util.Date establishmentDate,MusicGenre genre, Person frontMan) {
+    public MusicBand(String name, Coordinates coordinates, int numberOfParticipants, java.time.LocalDate establishmentDate,MusicGenre genre, Person frontMan) {
         this.name = name;
         this.coordinates = coordinates;
         this.numberOfParticipants = numberOfParticipants;
@@ -47,7 +47,7 @@ public class MusicBand implements Comparable<MusicBand>{
         return id;
     }
 
-    public java.util.Date getEstablishmentDate() {
+    public java.time.LocalDate getEstablishmentDate() {
         return establishmentDate;
     }
 
@@ -79,7 +79,7 @@ public class MusicBand implements Comparable<MusicBand>{
         this.genre = genre;
     }
 
-    public void setEstablishmentDate(Date establishmentDate) {
+    public void setEstablishmentDate(LocalDate establishmentDate) {
         this.establishmentDate = establishmentDate;
     }
 

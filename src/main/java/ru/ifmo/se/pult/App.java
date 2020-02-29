@@ -7,13 +7,11 @@ import java.util.*;
 
 //Receiver
 public class App {
-    Reader reader;
     Collection collection;
     private List<String> history = new ArrayList<>();
 
-    public App(Collection collection, Reader reader) throws FileNotFoundException, IOException {
+    public App(Collection collection) throws FileNotFoundException, IOException {
         this.collection = collection;
-        this.reader = reader;
     }
 
 
@@ -43,7 +41,9 @@ public class App {
     }
 
     public void show() {
-        System.out.println(collection.getCollection().toString());
+        for (MusicBand musicBand: collection.getCollection()){
+            System.out.println(musicBand.toString());
+        }
         history.add("show");
     }
 
@@ -58,7 +58,7 @@ public class App {
         boolean flag = true;
         for (MusicBand musicBand : collection.getCollection()) {
             if (musicBand.getId() == ip) {
-                collection.update(ip, reader.readCollectionObject());
+                collection.update(ip, Reader.readCollectionObject(new Scanner(System.in)));
                 flag = false;
             }
         }
@@ -95,12 +95,12 @@ public class App {
     }
 
     public void removeGreater() {
-        collection.removeGreater(reader.readCollectionObject());
+        collection.removeGreater(Reader.readCollectionObject(new Scanner(System.in)));
         history.add("remove_greater");
     }
 
     public void removeLower() {
-        collection.removeLower(reader.readCollectionObject());
+        collection.removeLower(Reader.readCollectionObject(new Scanner(System.in)));
         history.add("remove_lower");
     }
 

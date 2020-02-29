@@ -7,20 +7,21 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.DateTimeException;
+import java.time.LocalDate;
 import java.util.Date;
+import java.util.Locale;
 import java.util.Scanner;
 
 public class Reader {
-    private Scanner in;
-    private File scriptName;
-    private Integer argument;
+    private static File scriptName;
+    private static Integer argument;
     private static File startFile;
 
     public Reader(Scanner in) {
-        this.in = in;
     }
 
-    public CommandName readCommand() {
+    public static CommandName readCommand(Scanner in) {
         String command = in.nextLine();
         String[] mas = command.split("\\s");
         boolean flag = true;
@@ -65,11 +66,11 @@ public class Reader {
         }
     }
 
-    public int readArgument(){
+    public static int readArgument(){
         return argument;
     }
 
-    public File readScriptName() {
+    public static File readScriptName() {
         return scriptName;
     }
 
@@ -92,7 +93,7 @@ public class Reader {
         return startFile;
     }
 
-    public MusicBand readCollectionObject() {
+    public static MusicBand readCollectionObject(Scanner in) {
         //name
         System.out.println("Введите имя группы: ");
         String name = in.nextLine();
@@ -219,23 +220,34 @@ public class Reader {
 
         //establishmentDate
         System.out.println("Введите дату создания: ");
-        Date date = new Date();
+        LocalDate date = LocalDate.now();
         s = in.nextLine();
+        int day;
+        int month;
+        int year;
         bool = true;
+        String[] dat = s.split("-");
         if (s.equals("")){
             date = null;
         }
         else{
             try {
-                date = new SimpleDateFormat("dd-MM-yyyy").parse(s);
-            } catch (ParseException e) {
+                day = Integer.parseInt(dat[0]);
+                month = Integer.parseInt(dat[1]);
+                year = Integer.parseInt(dat[2]);
+                date = LocalDate.of(day,month,year);
+            } catch (NumberFormatException | ArrayIndexOutOfBoundsException | DateTimeException e) {
                 while (bool) {
                     try {
-                        date = new SimpleDateFormat("dd-MM-yyyy").parse(s);
+                        day = Integer.parseInt(dat[0]);
+                        month = Integer.parseInt(dat[1]);
+                        year = Integer.parseInt(dat[2]);
+                        date = LocalDate.of(year,month,day);
                         bool = false;
-                    } catch (ParseException f) {
+                    } catch (NumberFormatException | ArrayIndexOutOfBoundsException | DateTimeException f) {
                         System.out.println("Дата создания введена неверно, повторите попытку");
                         s = in.nextLine();
+                        dat = s.split("-");
                     }
                 }
             }
@@ -387,9 +399,5 @@ public class Reader {
 
     public static File getStartFile() {
         return startFile;
-    }
-
-    public void setIn(Scanner in) {
-        this.in = in;
     }
 }
