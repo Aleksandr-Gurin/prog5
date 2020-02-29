@@ -247,6 +247,7 @@ public class Reader {
                     } catch (NumberFormatException | ArrayIndexOutOfBoundsException | DateTimeException f) {
                         System.out.println("Дата создания введена неверно, повторите попытку");
                         s = in.nextLine();
+
                         dat = s.split("-");
                     }
                 }
