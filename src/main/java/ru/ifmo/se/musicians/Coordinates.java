@@ -16,8 +16,8 @@ public class Coordinates {
 
     /**
      * Constructor Coordinates
-     * @param x x < 913
-     * @param y y > -224
+     * @param x x меньше 913
+     * @param y y больше -224
      */
     public Coordinates(long x, double y){
         this.x = x;
