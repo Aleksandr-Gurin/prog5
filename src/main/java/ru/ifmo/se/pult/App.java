@@ -10,14 +10,18 @@ import java.util.*;
  * Хранит исполнения команд
  */
 public class App {
+    Reader reader;
     private Collection collection;
+    private FileManager fileManager;
     private List<String> history = new ArrayList<>();
 
     /**
      * Constructor App
      * @param collection Класс, управляющий коллекцией
      */
-    public App(Collection collection) {
+    public App(Reader reader, Collection collection, FileManager fileManager) {
+        this.reader = reader;
+        this.fileManager = fileManager;
         this.collection = collection;
     }
 
@@ -68,6 +72,7 @@ public class App {
      */
     public void add(MusicBand musicBand) {
         collection.add(musicBand);
+        System.out.println("Объект добавлен в коллекцию");
         history.add("add");
     }
 
@@ -79,13 +84,14 @@ public class App {
         boolean flag = true;
         for (MusicBand musicBand : collection.getCollection()) {
             if (musicBand.getId() == ip) {
-                collection.update(ip, Reader.readCollectionObject(new Scanner(System.in)));
+                collection.update(ip, reader.readCollectionObject(new Scanner(System.in, "UTF-8")));
                 flag = false;
             }
         }
         if (flag) {
             System.out.println("Неправильно введен ip, повторите команду:");
         }
+        System.out.println("Объект обновлен");
         history.add("update");
     }
 
@@ -95,6 +101,7 @@ public class App {
      */
     public void removeById(Integer id) {
         collection.remove(id);
+        System.out.println("Объект удален");
         history.add("remove_by_id");
     }
 
@@ -111,28 +118,22 @@ public class App {
      * Сохраняет коллекцию в файл
      */
     public void save() {
-        FileManager.saveFile(collection.getCollection());
+        fileManager.saveFile(collection.getCollection());
+        System.out.println("Коллекция сохранена");
         history.add("save");
     }
 
     /**
      * Считывает и исполняет скрипт из указанного файла. В скрипте содержатся команды в таком же виде, в котором их вводит пользователь в интерактивном режиме.
      */
-    public void executeScript() {
-        BufferedInputStream in1 = null;
-        try {
-            in1 = new BufferedInputStream(new FileInputStream("C:\\lesson\\prog\\prog5\\src\\main\\java\\ru\\ifmo\\se\\script"));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        System.setIn(in1);
-    }
+    public void executeScript() {}
 
     /**
      * Удаляет из коллекции все элементы, меньшие, чем заданный
      */
     public void removeGreater() {
-        collection.removeGreater(Reader.readCollectionObject(new Scanner(System.in)));
+        collection.removeGreater(reader.readCollectionObject(new Scanner(System.in,"UTF-8")));
+        System.out.println("Объекты удалены");
         history.add("remove_greater");
     }
 
@@ -140,7 +141,8 @@ public class App {
      * Удаляет из коллекции все элементы, меньшие, чем заданный
      */
     public void removeLower() {
-        collection.removeLower(Reader.readCollectionObject(new Scanner(System.in)));
+        collection.removeLower(reader.readCollectionObject(new Scanner(System.in, "UTF-8")));
+        System.out.println("Объекты удалены");
         history.add("remove_lower");
     }
 
@@ -201,23 +203,7 @@ public class App {
      * Выводит элементы коллекции в порядке убывания
      */
     public void printDescending() {
-        MusicBand mb = null;
-        ArrayList<MusicBand> musicBands = new ArrayList<>();
-
-        if (collection.getCollection().size() > 0){
-            for (int i = 0; i < collection.getCollection().size(); i++) {
-                for (MusicBand musicBand : collection.getCollection()) {
-                    if (musicBand.compareTo(mb) >= 0 && !musicBands.contains(musicBand)) {
-                        mb = musicBand;
-                    }
-                }
-                musicBands.add(mb);
-                System.out.println(mb.toString());
-            }
-        }
-        else {
-            System.out.println("В коллекции нет элементов");
-        }
+        for (MusicBand musicBand: collection.getDescendingCollection()) System.out.println(musicBand.toString());
         history.add("print_descending");
     }
 

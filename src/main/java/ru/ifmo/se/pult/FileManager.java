@@ -22,6 +22,9 @@ import java.util.Scanner;
  * @since 0
  */
 public class FileManager {
+
+    File startFile;
+
     /**
      * Constructor FileManager
      */
@@ -33,7 +36,8 @@ public class FileManager {
      * @param file xml файл, в котором находится коллекция
      * @return Коллекция MusicBand
      */
-    public static LinkedHashSet<MusicBand> readFile(File file) {
+    public LinkedHashSet<MusicBand> readFile(File file) {
+        startFile = file;
         StringBuilder xml = new StringBuilder();
         Scanner scanner = null;
         boolean flag = true;
@@ -42,7 +46,7 @@ public class FileManager {
                 .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
                 .disable(DeserializationFeature.ADJUST_DATES_TO_CONTEXT_TIME_ZONE);
         try {
-            scanner = new Scanner(file);
+            scanner = new Scanner(file, "UTF-8");
         } catch (FileNotFoundException e) {
             System.out.println("Not correct address");
             flag = false;
@@ -64,7 +68,7 @@ public class FileManager {
      * Сохраняет коллекцию в изначальный xml файл
      * @param musicBands Коллекция
      */
-    public static void saveFile(LinkedHashSet musicBands) {
+    public void saveFile(LinkedHashSet musicBands) {
         XmlMapper mapper = new XmlMapper();
         mapper.registerModule(new JavaTimeModule())
                 .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
@@ -78,10 +82,12 @@ public class FileManager {
         FileOutputStream fileOutputStream = null;
 
         try {
-            fileOutputStream = new FileOutputStream(Reader.getStartFile());
+            fileOutputStream = new FileOutputStream(startFile);
             assert serialized != null;
             fileOutputStream.write(serialized.getBytes());
             fileOutputStream.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("Файл не найден");
         } catch (IOException e) {
             e.printStackTrace();
         }

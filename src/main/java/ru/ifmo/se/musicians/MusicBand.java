@@ -134,7 +134,8 @@ public class MusicBand implements Comparable<MusicBand>{
             return 1;
         }
         else {
-            return this.hashCode() - hashCode();
+            return this.name.length() + this.numberOfParticipants + this.frontMan.getName().length() -
+                    getName().length() - getNumberOfParticipants() - getFrontMan().getName().length();
         }
     }
 }

@@ -13,6 +13,7 @@ import java.util.regex.Pattern;
  */
 public class Controller {
     private final HashMap<Pattern, Command> commandMap = new HashMap<>();
+    Reader reader;
     private Command help;
     private Command info;
     private Command show;
@@ -33,7 +34,8 @@ public class Controller {
     /**
      * Constructor Controller, который принимает команды
      */
-    public Controller(Command help, Command info, Command show, Command add, Command updateId, Command removeById, Command clear, Command save, Command executeScript, Command exit, Command removeGreater, Command removeLower, Command history, Command maxByGenre, Command filterLessThan, Command printDescending) {
+    public Controller(Reader reader, Command help, Command info, Command show, Command add, Command updateId, Command removeById, Command clear, Command save, Command executeScript, Command exit, Command removeGreater, Command removeLower, Command history, Command maxByGenre, Command filterLessThan, Command printDescending) {
+        this.reader =reader;
         this.help = help;
         this.info = info;
         this.show = show;
@@ -58,11 +60,11 @@ public class Controller {
      */
     public void start(InputStream inputStream) {
         boolean exitFlag = true;
-        Scanner in = new Scanner(inputStream);
+        Scanner in = new Scanner(inputStream, "UTF-8");
 
         while (exitFlag && in.hasNextLine()) {
 
-            CommandName command = Reader.readCommand(in);
+            CommandName command = reader.readCommand(in);
 
             switch (command) {
                 case HELP:
@@ -72,16 +74,16 @@ public class Controller {
                     info.execute("");
                     break;
                 case UPDATE:
-                    update.execute(Reader.readArgument());
+                    update.execute(reader.readArgument());
                     break;
                 case REMOVE_BY_ID:
-                    removeById.execute(Reader.readArgument());
+                    removeById.execute(reader.readArgument());
                     break;
                 case FILTER_LESS_THEN_NUMBER_OF_PARTICIPANTS:
-                    filterLessThan.execute(Reader.readArgument());
+                    filterLessThan.execute(reader.readArgument());
                     break;
                 case ADD:
-                    add.execute(Reader.readCollectionObject(in));
+                    add.execute(reader.readCollectionObject(in));
                     break;
                 case REMOVE_LOWER:
                     removeLower.execute("");
@@ -91,7 +93,7 @@ public class Controller {
                     break;
                 case EXECUTE_SCRIPT:
                     try {
-                        InputStream fileInputStream = new FileInputStream(Reader.readScriptName());
+                        InputStream fileInputStream = new FileInputStream(reader.readScriptName());
                         this.start(fileInputStream);
                         fileInputStream.close();
                     } catch (NoSuchElementException ex) {

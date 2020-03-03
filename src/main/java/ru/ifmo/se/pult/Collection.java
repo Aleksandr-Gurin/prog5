@@ -3,6 +3,7 @@ package ru.ifmo.se.pult;
 import ru.ifmo.se.musicians.MusicBand;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.LinkedHashSet;
 
@@ -118,6 +119,20 @@ public class Collection {
      */
     public Date getInitDate() {
         return initDate;
+    }
+
+    /**
+     * Возвращает коллекцию в обратном порядке
+     * @return ArrayList сортированная коллекция
+     */
+    public ArrayList<MusicBand> getDescendingCollection() {
+        ArrayList<MusicBand> musicBandArrayList = new ArrayList<>(musicBands);
+        Collections.sort(musicBandArrayList, (MusicBand mb1,MusicBand mb2) -> {
+            if (mb1.compareTo(mb2) < 0) return 1;
+            else if(mb1.compareTo(mb2) > 0) return -1;
+            else return 0;
+        });
+        return musicBandArrayList;
     }
 
     /**
