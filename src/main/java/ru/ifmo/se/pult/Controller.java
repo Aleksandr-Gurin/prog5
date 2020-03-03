@@ -35,7 +35,7 @@ public class Controller {
      * Constructor Controller, который принимает команды
      */
     public Controller(Reader reader, Command help, Command info, Command show, Command add, Command updateId, Command removeById, Command clear, Command save, Command executeScript, Command exit, Command removeGreater, Command removeLower, Command history, Command maxByGenre, Command filterLessThan, Command printDescending) {
-        this.reader =reader;
+        this.reader = reader;
         this.help = help;
         this.info = info;
         this.show = show;

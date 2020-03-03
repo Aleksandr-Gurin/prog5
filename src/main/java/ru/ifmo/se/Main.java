@@ -13,7 +13,6 @@ import java.util.Scanner;
  * @since 0
  */
 public class Main {
-
     public static void main(String[] args) throws Exception{
         try {
             FileManager fileManager = new FileManager();

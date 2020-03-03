@@ -1,17 +1,17 @@
 package ru.ifmo.se.pult;
 
 import ru.ifmo.se.musicians.MusicBand;
+import ru.ifmo.se.musicians.MusicGenre;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-import java.util.LinkedHashSet;
+import java.util.*;
 
 /**
  * Класс, управляющий коллекцией
  */
 public class Collection {
     private LinkedHashSet<MusicBand> musicBands;
+    Reader reader;
+    App app;
 
     private Date initDate = new Date();
 
@@ -19,16 +19,19 @@ public class Collection {
      * Constructor collection
      * @param musicBands Коллекция, которой управляет класс
      */
-    public Collection(LinkedHashSet<MusicBand> musicBands) {
+    public Collection(LinkedHashSet<MusicBand> musicBands, Reader reader) {
         this.musicBands = musicBands;
+        this.reader = reader;
     }
 
     /**
-     * Добавляет элемент в коллекцию
-     * @param musicBand Добавляемый элемент
+     * Добавляет новый элемент в коллекцию
+     * @param musicBand добавляемый элемент
      */
     public void add(MusicBand musicBand) {
         musicBands.add(musicBand);
+        System.out.println("Объект добавлен в коллекцию");
+        app.pushHistory("add");
     }
 
     /**
@@ -86,7 +89,10 @@ public class Collection {
                 musicBands.remove(mb);
             }
         }
+        System.out.println("Объекты удалены");
+        app.pushHistory("remove_greater");
     }
+
 
     /**
      * Удаляет элементы коллекции, которые меньше данного
@@ -104,13 +110,18 @@ public class Collection {
                 musicBands.remove(mb);
             }
         }
+        System.out.println("Объекты удалены");
+        app.pushHistory("remove_lower");
     }
 
     /**
-     * Удаляет все элементы коллекции
+     * Выводит в стандартный поток вывода все элементы коллекции в строковом представлении
      */
-    public void clear() {
-        musicBands.clear();
+    public void show() {
+        for (MusicBand musicBand: musicBands){
+            System.out.println(musicBand.toString());
+        }
+        app.pushHistory("show");
     }
 
     /**
@@ -122,17 +133,17 @@ public class Collection {
     }
 
     /**
-     * Возвращает коллекцию в обратном порядке
-     * @return ArrayList сортированная коллекция
+     * Выводит элементы в обратном порядке
      */
-    public ArrayList<MusicBand> getDescendingCollection() {
+    public void printDescending() {
         ArrayList<MusicBand> musicBandArrayList = new ArrayList<>(musicBands);
         Collections.sort(musicBandArrayList, (MusicBand mb1,MusicBand mb2) -> {
             if (mb1.compareTo(mb2) < 0) return 1;
             else if(mb1.compareTo(mb2) > 0) return -1;
             else return 0;
         });
-        return musicBandArrayList;
+        for (MusicBand musicBand: musicBandArrayList) System.out.println(musicBand.toString());
+        app.pushHistory("print_descending");
     }
 
     /**
@@ -141,5 +152,69 @@ public class Collection {
      */
     public LinkedHashSet<MusicBand> getCollection(){
         return musicBands;
+    }
+
+    /**
+     * Очищает коллекцию
+     */
+    public void clear() {
+        musicBands.clear();
+        System.out.println("Коллекция очищена");
+        app.pushHistory("clear");
+    }
+
+    /**
+     * Возвращает элементы, значение поля numberOfParticipants которых меньше заданного
+     * @param nop numberOfParticipants
+     */
+    public void filterLessThanNumberOfParticipants(int nop) {
+        for (MusicBand musicBand : musicBands) {
+            if (musicBand.getNumberOfParticipants() < nop) {
+                System.out.println(musicBand.toString());
+            }
+        }
+        app.pushHistory("filter_less_than_number_of_participants");
+    }
+
+    /**
+     * Выводит в стандартный поток вывода информацию о коллекции (тип, дата инициализации, количество элементов и т.д.)
+     */
+    public void info() {
+        System.out.println("Тип: " + musicBands.getClass() + "\nДата инициализации: " + getInitDate() + "\nКоличество элементов: " + musicBands.size());
+        app.pushHistory("info");
+    }
+
+    /**
+     * Удаляет элемент из коллекции по его id
+     * @param id id, удаляемого элемента
+     */
+    public void removeById(Integer id) {
+        musicBands.remove(id);
+        System.out.println("Объект удален");
+        app.pushHistory("remove_by_id");
+    }
+
+    /**
+     * Выводит любой объект из коллекции, значение поля genre которого является максимальным
+     */
+    public void maxByGenre() {
+        MusicGenre musicGenre = MusicGenre.BLUES;
+        for (MusicGenre mg : MusicGenre.values()) {
+            if (musicGenre.compareTo(mg) > 0) {
+                musicGenre = mg;
+            }
+        }
+        MusicBand mb = null;
+
+        if (musicBands.size() > 0) {
+            for (MusicBand musicBand : musicBands) {
+                if (musicBand.getGenre().compareTo(musicGenre) > 0) {
+                    musicGenre = musicBand.getGenre();
+                    mb = musicBand;
+                }
+            }
+        }
+        System.out.println(mb);
+        app.pushHistory("max_by_genre");
     }
 }

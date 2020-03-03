@@ -24,11 +24,13 @@ import java.util.Scanner;
 public class FileManager {
 
     File startFile;
+    Collection collection;
 
     /**
      * Constructor FileManager
      */
-    public FileManager() {
+    public FileManager(Collection collection) {
+        this.collection = collection;
     }
 
     /**
@@ -66,16 +68,15 @@ public class FileManager {
 
     /**
      * Сохраняет коллекцию в изначальный xml файл
-     * @param musicBands Коллекция
      */
-    public void saveFile(LinkedHashSet musicBands) {
+    public void saveFile() {
         XmlMapper mapper = new XmlMapper();
         mapper.registerModule(new JavaTimeModule())
                 .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
                 .disable(DeserializationFeature.ADJUST_DATES_TO_CONTEXT_TIME_ZONE);
         String serialized = null;
         try {
-            serialized = mapper.writeValueAsString(musicBands);
+            serialized = mapper.writeValueAsString(collection.getCollection());
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }

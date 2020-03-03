@@ -157,6 +157,7 @@ public class Reader {
         boolean flag = true;
         String s = in.nextLine();
         while (s.equals("") || flag || x == Long.MIN_VALUE || x == Long.MAX_VALUE) {
+            flag = true;
             try {
                 x = Long.parseLong(s);
                 flag = false;
@@ -179,6 +180,7 @@ public class Reader {
         boolean flag = true;
         double y = 0;
         while (s.equals("") || flag || y == Double.POSITIVE_INFINITY || y == Double.NEGATIVE_INFINITY) {
+            flag = true;
             try {
                 y = Double.parseDouble(s);
                 flag = false;
@@ -201,6 +203,7 @@ public class Reader {
         boolean flag = true;
         int x = 0;
         while (s.equals("") || flag) {
+            flag = true;
             try {
                 x = Integer.parseInt(s);
                 flag = false;

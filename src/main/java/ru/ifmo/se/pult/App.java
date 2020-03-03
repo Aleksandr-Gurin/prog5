@@ -49,34 +49,6 @@ public class App {
     }
 
     /**
-     * Выводит в стандартный поток вывода информацию о коллекции (тип, дата инициализации, количество элементов и т.д.)
-     */
-    public void info() {
-        System.out.println("Тип: " + collection.getCollection().getClass() + "\nДата инициализации: " + collection.getInitDate() + "\nКоличество элементов: " + collection.getCollection().size());
-        history.add("info");
-    }
-
-    /**
-     * Выводит в стандартный поток вывода все элементы коллекции в строковом представлении
-     */
-    public void show() {
-        for (MusicBand musicBand: collection.getCollection()){
-            System.out.println(musicBand.toString());
-        }
-        history.add("show");
-    }
-
-    /**
-     * Добавляет новый элемент в коллекцию
-     * @param musicBand добавляемый элемент
-     */
-    public void add(MusicBand musicBand) {
-        collection.add(musicBand);
-        System.out.println("Объект добавлен в коллекцию");
-        history.add("add");
-    }
-
-    /**
      * Обновляет значение элемента коллекции, id которого равен заданному
      * @param ip id элемента
      */
@@ -96,46 +68,9 @@ public class App {
     }
 
     /**
-     * Удаляет элемент из коллекции по его id
-     * @param id id, удаляемого элемента
-     */
-    public void removeById(Integer id) {
-        collection.remove(id);
-        System.out.println("Объект удален");
-        history.add("remove_by_id");
-    }
-
-    /**
-     * Очищает коллекцию
-     */
-    public void clear() {
-        collection.clear();
-        System.out.println("Коллекция очищена");
-        history.add("clear");
-    }
-
-    /**
-     * Сохраняет коллекцию в файл
-     */
-    public void save() {
-        fileManager.saveFile(collection.getCollection());
-        System.out.println("Коллекция сохранена");
-        history.add("save");
-    }
-
-    /**
      * Считывает и исполняет скрипт из указанного файла. В скрипте содержатся команды в таком же виде, в котором их вводит пользователь в интерактивном режиме.
      */
     public void executeScript() {}
-
-    /**
-     * Удаляет из коллекции все элементы, меньшие, чем заданный
-     */
-    public void removeGreater() {
-        collection.removeGreater(reader.readCollectionObject(new Scanner(System.in,"UTF-8")));
-        System.out.println("Объекты удалены");
-        history.add("remove_greater");
-    }
 
     /**
      * Удаляет из коллекции все элементы, меньшие, чем заданный
@@ -163,48 +98,11 @@ public class App {
     }
 
     /**
-     * Выводит любой объект из коллекции, значение поля genre которого является максимальным
+     * Сохраняет последние команды, введенные пользователем
+     * @param command Команда
      */
-    public void maxByGenre() {
-        MusicGenre musicGenre = MusicGenre.BLUES;
-        for (MusicGenre mg : MusicGenre.values()) {
-            if (musicGenre.compareTo(mg) > 0) {
-                musicGenre = mg;
-            }
-        }
-        MusicBand mb = null;
-
-        if (collection.getCollection().size() > 0) {
-            for (MusicBand musicBand : collection.getCollection()) {
-                if (musicBand.getGenre().compareTo(musicGenre) > 0) {
-                    musicGenre = musicBand.getGenre();
-                    mb = musicBand;
-                }
-            }
-        }
-        System.out.println(mb);
-        history.add("max_by_genre");
-    }
-
-    /**
-     * Выводит элементы, значение поля numberOfParticipants которых меньше заданного
-     * @param nop numberOfParticipants
-     */
-    public void filterLessThanNumberOfParticipants(int nop) {
-        for (MusicBand musicBand : collection.getCollection()) {
-            if (musicBand.getNumberOfParticipants() < nop) {
-                System.out.println(musicBand.toString());
-            }
-        }
-        history.add("filter_less_than_number_of_participants");
-    }
-
-    /**
-     * Выводит элементы коллекции в порядке убывания
-     */
-    public void printDescending() {
-        for (MusicBand musicBand: collection.getDescendingCollection()) System.out.println(musicBand.toString());
-        history.add("print_descending");
+    public void pushHistory(String command) {
+        history.add(command);
     }
 
     /**
