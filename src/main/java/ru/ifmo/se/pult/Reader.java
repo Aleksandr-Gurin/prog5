@@ -227,7 +227,7 @@ public class Reader {
         int month;
         int year;
         boolean flag = true;
-        String[] dat = s.split(".");
+        String[] dat = s.split("\\.");
         if (s.equals("")) {
             date = null;
         } else {
@@ -236,7 +236,7 @@ public class Reader {
                     day = Integer.parseInt(dat[0]);
                     month = Integer.parseInt(dat[1]);
                     year = Integer.parseInt(dat[2]);
-                    date = LocalDate.of(year, month, day);
+                    date = LocalDate.of(year,month,day);
                     flag = false;
                 } catch (NumberFormatException | ArrayIndexOutOfBoundsException | DateTimeException f) {
                     System.out.println("Дата введена неверно, повторите попытку");
@@ -245,7 +245,7 @@ public class Reader {
                         date = null;
                         break;
                     }
-                    dat = s.split("-");
+                    dat = s.split("\\.");
                 }
             }
         }

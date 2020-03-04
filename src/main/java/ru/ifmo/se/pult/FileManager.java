@@ -24,13 +24,12 @@ import java.util.Scanner;
 public class FileManager {
 
     File startFile;
-    Collection collection;
 
     /**
      * Constructor FileManager
      */
-    public FileManager(Collection collection) {
-        this.collection = collection;
+    public FileManager() {
+
     }
 
     /**
@@ -68,8 +67,9 @@ public class FileManager {
 
     /**
      * Сохраняет коллекцию в изначальный xml файл
+     * @param collection
      */
-    public void saveFile() {
+    public void saveFile(Collection collection) {
         XmlMapper mapper = new XmlMapper();
         mapper.registerModule(new JavaTimeModule())
                 .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
@@ -87,6 +87,7 @@ public class FileManager {
             assert serialized != null;
             fileOutputStream.write(serialized.getBytes());
             fileOutputStream.close();
+            System.out.println("Файл сохранен");
         } catch (FileNotFoundException e) {
             System.out.println("Файл не найден");
         } catch (IOException e) {

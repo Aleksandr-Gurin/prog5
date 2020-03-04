@@ -14,6 +14,7 @@ import java.util.regex.Pattern;
 public class Controller {
     private final HashMap<Pattern, Command> commandMap = new HashMap<>();
     Reader reader;
+    ArrayList hist = new ArrayList();
     private Command help;
     private Command info;
     private Command show;
@@ -65,6 +66,7 @@ public class Controller {
         while (exitFlag && in.hasNextLine()) {
 
             CommandName command = reader.readCommand(in);
+            hist.add(command);
 
             switch (command) {
                 case HELP:
@@ -118,7 +120,7 @@ public class Controller {
                     exitFlag = false;
                     break;
                 case HISTORY:
-                    history.execute("");
+                    history.execute(hist);
                     break;
                 case MAX_BY_GENRE:
                     maxByGenre.execute("");

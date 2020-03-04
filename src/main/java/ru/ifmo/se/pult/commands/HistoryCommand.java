@@ -10,7 +10,7 @@ public class HistoryCommand implements Command {
     }
 
     @Override
-    public <T> void execute(T data) {
-        app.history();
+    public <ArrayList> void execute(ArrayList history) {
+        app.history((java.util.ArrayList<Command>) history);
     }
 }

@@ -11,7 +11,6 @@ import java.util.*;
 public class Collection {
     private LinkedHashSet<MusicBand> musicBands;
     Reader reader;
-    App app;
 
     private Date initDate = new Date();
 
@@ -31,7 +30,6 @@ public class Collection {
     public void add(MusicBand musicBand) {
         musicBands.add(musicBand);
         System.out.println("Объект добавлен в коллекцию");
-        app.pushHistory("add");
     }
 
     /**
@@ -90,7 +88,6 @@ public class Collection {
             }
         }
         System.out.println("Объекты удалены");
-        app.pushHistory("remove_greater");
     }
 
 
@@ -111,7 +108,6 @@ public class Collection {
             }
         }
         System.out.println("Объекты удалены");
-        app.pushHistory("remove_lower");
     }
 
     /**
@@ -121,7 +117,6 @@ public class Collection {
         for (MusicBand musicBand: musicBands){
             System.out.println(musicBand.toString());
         }
-        app.pushHistory("show");
     }
 
     /**
@@ -143,7 +138,6 @@ public class Collection {
             else return 0;
         });
         for (MusicBand musicBand: musicBandArrayList) System.out.println(musicBand.toString());
-        app.pushHistory("print_descending");
     }
 
     /**
@@ -160,7 +154,6 @@ public class Collection {
     public void clear() {
         musicBands.clear();
         System.out.println("Коллекция очищена");
-        app.pushHistory("clear");
     }
 
     /**
@@ -173,7 +166,6 @@ public class Collection {
                 System.out.println(musicBand.toString());
             }
         }
-        app.pushHistory("filter_less_than_number_of_participants");
     }
 
     /**
@@ -181,7 +173,6 @@ public class Collection {
      */
     public void info() {
         System.out.println("Тип: " + musicBands.getClass() + "\nДата инициализации: " + getInitDate() + "\nКоличество элементов: " + musicBands.size());
-        app.pushHistory("info");
     }
 
     /**
@@ -191,7 +182,6 @@ public class Collection {
     public void removeById(Integer id) {
         musicBands.remove(id);
         System.out.println("Объект удален");
-        app.pushHistory("remove_by_id");
     }
 
     /**
@@ -215,6 +205,5 @@ public class Collection {
             }
         }
         System.out.println(mb);
-        app.pushHistory("max_by_genre");
     }
 }

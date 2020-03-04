@@ -13,7 +13,6 @@ public class App {
     Reader reader;
     private Collection collection;
     private FileManager fileManager;
-    private List<String> history = new ArrayList<>();
 
     /**
      * Constructor App
@@ -45,9 +44,11 @@ public class App {
                 "max_by_genre : вывести любой объект из коллекции, значение поля genre которого является максимальным\n" +
                 "filter_less_than_number_of_participants numberOfParticipants : вывести элементы, значение поля numberOfParticipants которых меньше заданного\n" +
                 "print_descending : вывести элементы коллекции в порядке убывания");
-        history.add("help");
     }
 
+    public void saveFile(){
+        fileManager.saveFile(collection);
+    }
 
     /**
      * Обновляет значение элемента коллекции, id которого равен заданному
@@ -65,7 +66,6 @@ public class App {
             System.out.println("Неправильно введен ip, повторите команду:");
         }
         System.out.println("Объект обновлен");
-        history.add("update");
     }
 
     /**
@@ -79,31 +79,21 @@ public class App {
     public void removeLower() {
         collection.removeLower(reader.readCollectionObject(new Scanner(System.in, "UTF-8")));
         System.out.println("Объекты удалены");
-        history.add("remove_lower");
     }
 
     /**
      * Выводит последние 5 команд (без их аргументов)
      */
-    public void history() {
+    public void history(ArrayList<Command> history) {
         if (history.size() < 5) {
-            for (String command : history) {
-                System.out.println(command);
+            for (Command command : history) {
+                System.out.println(command.toString());
             }
         } else {
             for (int i = history.size() - 5; i < history.size(); i++) {
-                System.out.println(history.get(i));
+                System.out.println(history.get(i).toString());
             }
         }
-        history.add("history");
-    }
-
-    /**
-     * Сохраняет последние команды, введенные пользователем
-     * @param command Команда
-     */
-    public void pushHistory(String command) {
-        history.add(command);
     }
 
     /**

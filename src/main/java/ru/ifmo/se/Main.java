@@ -15,11 +15,11 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) throws Exception{
         try {
-            FileManager fileManager = new FileManager();
             Reader reader = new Reader();
-            Collection collection = new Collection(fileManager.readFile(Reader.readFile(new Scanner(System.in, "UTF-8"))));
+            FileManager fileManager = new FileManager();
+            Collection collection = new Collection(fileManager.readFile(Reader.readFile(new Scanner(System.in, "UTF-8"))), reader);
             App app = new App(reader, collection, fileManager);
-            Controller controller = new Controller(reader, new HelpCommand(app), new InfoCommand(app), new ShowCommand(app), new AddCommand(app), new UpdateIdCommand(app), new RemoveByIdCommand(app), new ClearCommand(app), new SaveCommand(app), new ExecuteScriptCommand(app), new ExitCommand(app), new RemoveGreaterCommand(app), new RemoveLowerCommand(app), new HistoryCommand(app), new MaxByGenreCommand(app), new FilterLessThanNumberOfParticipantsCommand(app), new PrintDescendingCommand(app));
+            Controller controller = new Controller(reader, new HelpCommand(app), new InfoCommand(collection), new ShowCommand(collection), new AddCommand(collection), new UpdateIdCommand(app), new RemoveByIdCommand(collection), new ClearCommand(collection), new SaveCommand(app), new ExecuteScriptCommand(app), new ExitCommand(app), new RemoveGreaterCommand(collection), new RemoveLowerCommand(collection), new HistoryCommand(app), new MaxByGenreCommand(collection), new FilterLessThanNumberOfParticipantsCommand(collection), new PrintDescendingCommand(collection));
             controller.start(System.in);
         }
         catch (NoSuchElementException e){
