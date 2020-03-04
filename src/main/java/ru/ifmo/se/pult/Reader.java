@@ -121,7 +121,6 @@ public class Reader {
                 }
                 file = new Scanner(startFile, "UTF-8");
                 flag = false;
-                System.out.println("Путь к файлу введен успешно");
             } catch (NoSuchElementException | IOException e) {
                 System.out.println("Неправильно введен путь повторите попытку: ");
                 path = in.nextLine();

@@ -10,7 +10,7 @@ public class HelpCommand implements Command {
     }
 
     @Override
-    public <Object> void execute(Object bool) {
+    public void execute(Object object) {
         app.help();
     }
 }

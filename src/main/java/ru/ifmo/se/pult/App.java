@@ -84,14 +84,14 @@ public class App {
     /**
      * Выводит последние 5 команд (без их аргументов)
      */
-    public void history(ArrayList<Command> history) {
+    public void history(ArrayList<CommandName> history) {
         if (history.size() < 5) {
-            for (Command command : history) {
-                System.out.println(command.toString());
+            for (CommandName command : history) {
+                System.out.println(command.toString().toLowerCase());
             }
         } else {
             for (int i = history.size() - 5; i < history.size(); i++) {
-                System.out.println(history.get(i).toString());
+                System.out.println(history.get(i).toString().toLowerCase());
             }
         }
     }

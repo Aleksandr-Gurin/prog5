@@ -11,7 +11,7 @@ public class ShowCommand implements Command {
     }
 
     @Override
-    public <T> void execute(T data) {
+    public void execute(Object object) {
         collection.show();
     }
 }

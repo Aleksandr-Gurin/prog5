@@ -17,6 +17,7 @@ import java.util.Scanner;
 
 /**
  * Работает с файлами
+ *
  * @author Gurin Minu
  * @version 0
  * @since 0
@@ -34,6 +35,7 @@ public class FileManager {
 
     /**
      * Читает xml файл, и возвращает коллекцию MusicBand из этого файла
+     *
      * @param file xml файл, в котором находится коллекция
      * @return Коллекция MusicBand
      */
@@ -42,31 +44,37 @@ public class FileManager {
         StringBuilder xml = new StringBuilder();
         Scanner scanner = null;
         boolean flag = true;
+        LinkedHashSet<MusicBand> musicBands = new LinkedHashSet<>();
         XmlMapper mapper = new XmlMapper();
         mapper.registerModule(new JavaTimeModule())
                 .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
                 .disable(DeserializationFeature.ADJUST_DATES_TO_CONTEXT_TIME_ZONE);
-        try {
-            scanner = new Scanner(file, "UTF-8");
-        } catch (FileNotFoundException e) {
-            System.out.println("Not correct address");
-            flag = false;
-        }
-        assert scanner != null;
-        while (flag && scanner.hasNextLine()) {
-            xml.append(scanner.nextLine());
-        }
-        LinkedHashSet<MusicBand> musicBands = new LinkedHashSet<>();
-        try {
-            Collections.addAll(musicBands, mapper.readValue(xml.toString(), MusicBand[].class));
-        } catch (IOException e) {
-            System.out.println(e);
+        while (flag) {
+            try {
+                scanner = new Scanner(file, "UTF-8");
+            } catch (FileNotFoundException e) {
+                System.out.println("Not correct address");
+                continue;
+            }
+            xml = new StringBuilder();
+            while (scanner.hasNextLine()) {
+                xml.append(scanner.nextLine());
+            }
+            try {
+                Collections.addAll(musicBands, mapper.readValue(xml.toString(), MusicBand[].class));
+                System.out.println("Путь к файлу введен успешно");
+                flag = false;
+            } catch (IOException e) {
+                System.out.println("В этом файле содержится нечто неизвестное");
+                file = Reader.readFile(new Scanner(System.in, "UTF-8"));
+            }
         }
         return musicBands;
     }
 
     /**
      * Сохраняет коллекцию в изначальный xml файл
+     *
      * @param collection
      */
     public void saveFile(Collection collection) {

@@ -10,7 +10,7 @@ public class ExecuteScriptCommand implements Command {
     }
 
     @Override
-    public <T> void execute(T data) {
+    public void execute(Object object) {
 
     }
 }

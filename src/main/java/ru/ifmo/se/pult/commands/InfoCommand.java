@@ -11,7 +11,7 @@ public class InfoCommand implements Command {
     }
 
     @Override
-    public <Object> void execute(Object data) {
+    public void execute(Object object) {
         collection.info();
     }
 }

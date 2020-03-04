@@ -10,7 +10,7 @@ public class MaxByGenreCommand implements Command {
     }
 
     @Override
-    public <T> void execute(T data) {
+    public void execute(Object object) {
         collection.maxByGenre();
     }
 }
