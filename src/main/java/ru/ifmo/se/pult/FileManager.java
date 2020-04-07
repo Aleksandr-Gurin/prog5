@@ -13,6 +13,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.LinkedHashSet;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 /**
@@ -39,7 +40,7 @@ public class FileManager {
      * @param file xml файл, в котором находится коллекция
      * @return Коллекция MusicBand
      */
-    public LinkedHashSet<MusicBand> readFile(File file) {
+    public LinkedHashSet<MusicBand> readFile(File file) throws FileNotFoundException {
         startFile = file;
         StringBuilder xml = new StringBuilder();
         Scanner scanner = null;
@@ -49,25 +50,16 @@ public class FileManager {
         mapper.registerModule(new JavaTimeModule())
                 .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
                 .disable(DeserializationFeature.ADJUST_DATES_TO_CONTEXT_TIME_ZONE);
-        while (flag) {
-            try {
-                scanner = new Scanner(file, "UTF-8");
-            } catch (FileNotFoundException e) {
-                System.out.println("Not correct address");
-                continue;
-            }
-            xml = new StringBuilder();
-            while (scanner.hasNextLine()) {
-                xml.append(scanner.nextLine());
-            }
-            try {
-                Collections.addAll(musicBands, mapper.readValue(xml.toString(), MusicBand[].class));
-                System.out.println("Путь к файлу введен успешно");
-                flag = false;
-            } catch (IOException e) {
-                System.out.println("В этом файле содержится нечто неизвестное");
-                file = Reader.readFile(new Scanner(System.in, "UTF-8"));
-            }
+        scanner = new Scanner(file, "UTF-8");
+        xml = new StringBuilder();
+        while (scanner.hasNextLine()) {
+            xml.append(scanner.nextLine());
+        }
+        try {
+            Collections.addAll(musicBands, mapper.readValue(xml.toString(), MusicBand[].class));
+            System.out.println("Путь к файлу введен успешно");
+        } catch (IOException e) {
+            System.out.println("В этом файле содержится нечто неизвестное");
         }
         return musicBands;
     }

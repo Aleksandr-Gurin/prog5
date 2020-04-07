@@ -195,10 +195,9 @@ public class Collection {
             }
         }
         MusicBand mb = null;
-
         if (musicBands.size() > 0) {
             for (MusicBand musicBand : musicBands) {
-                if (musicBand.getGenre().compareTo(musicGenre) > 0) {
+                if (musicBand.getGenre() != null && musicBand.getGenre().compareTo(musicGenre) >= 0) {
                     musicGenre = musicBand.getGenre();
                     mb = musicBand;
                 }

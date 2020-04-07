@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.InvalidPathException;
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.util.NoSuchElementException;
@@ -89,7 +90,6 @@ public class Reader {
      * @param in Scanner
      * @return File
      */
-
     public static File readFile(Scanner in) {
         System.out.println("Введите путь к файлу: ");
         String path = in.nextLine();
@@ -121,11 +121,38 @@ public class Reader {
                 }
                 file = new Scanner(startFile, "UTF-8");
                 flag = false;
-            } catch (NoSuchElementException | IOException e) {
+            } catch (NoSuchElementException | IOException | InvalidPathException e) {
                 System.out.println("Неправильно введен путь повторите попытку: ");
                 path = in.nextLine();
                 startFile = new File(path);
             }
+        }
+        return startFile;
+    }
+
+    /**
+     * Возвращает изначачальный файл, путь к которому указал пользователь
+     * @param path path
+     * @return File
+     */
+    public static File readFile(String path) {
+        Scanner file;
+        boolean flag = true;
+        File startFile = new File(path);
+        try {
+            if (Files.isHidden(startFile.toPath())) {
+                System.out.println("Файл спрятался, укажите другой или найдите его");
+            } else if (!Files.isReadable(startFile.toPath())) {
+                System.out.println("Файл нельзя прочитать, укажите другой или измените разрешение");
+            } else if (!Files.isWritable(startFile.toPath())) {
+                System.out.println("Файл нельзя изменить, укажите другой или измените разрешение");
+            } else if (!Files.isExecutable(startFile.toPath())) {
+                System.out.println("Файл нельзя execute, укажите другой или измените разрешение");
+            }
+            file = new Scanner(startFile, "UTF-8");
+            flag = false;
+        } catch (NoSuchElementException | IOException | InvalidPathException e) {
+            System.out.println("Неправильно введен путь");
         }
         return startFile;
     }
@@ -216,6 +243,7 @@ public class Reader {
 
     /**
      * Возвращает LocalDate, введенный пользователем
+     *
      * @param in Ввод пользователя
      * @return LocalDate
      */
@@ -235,7 +263,7 @@ public class Reader {
                     day = Integer.parseInt(dat[0]);
                     month = Integer.parseInt(dat[1]);
                     year = Integer.parseInt(dat[2]);
-                    date = LocalDate.of(year,month,day);
+                    date = LocalDate.of(year, month, day);
                     flag = false;
                 } catch (NumberFormatException | ArrayIndexOutOfBoundsException | DateTimeException f) {
                     System.out.println("Дата введена неверно, повторите попытку");
@@ -253,6 +281,7 @@ public class Reader {
 
     /**
      * Возвращает MusicGenre, введенный пользователем
+     *
      * @param in Ввод пользователя
      * @return MusicGenre
      */
@@ -282,6 +311,7 @@ public class Reader {
 
     /**
      * Возвращает Color, введенный пользователем
+     *
      * @param in Ввод пользователя
      * @return Color
      */
@@ -311,6 +341,7 @@ public class Reader {
 
     /**
      * Возвращает Country, введенный пользователем
+     *
      * @param in Ввод пользователя
      * @return Country
      */
@@ -340,6 +371,7 @@ public class Reader {
 
     /**
      * Возвращает объект, поля которых указывает пользователь
+     *
      * @param in Scanner
      * @return MusicBand
      */

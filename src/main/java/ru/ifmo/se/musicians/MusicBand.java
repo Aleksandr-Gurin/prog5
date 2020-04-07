@@ -112,7 +112,7 @@ public class MusicBand implements Comparable<MusicBand>{
 
     @Override
     public int hashCode(){
-        return Objects.hash(id, name, coordinates, creationDate, numberOfParticipants, establishmentDate, genre, frontMan);
+        return Objects.hash(name, coordinates, creationDate, numberOfParticipants, establishmentDate, genre, frontMan);
     }
 
     @Override
@@ -120,8 +120,7 @@ public class MusicBand implements Comparable<MusicBand>{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         MusicBand testClass = (MusicBand) o;
-        return id == testClass.id &&
-                Objects.equals(creationDate, testClass.creationDate) &&
+        return Objects.equals(creationDate, testClass.creationDate) &&
                 Objects.equals(genre, testClass.genre) &&
                 Objects.equals(creationDate, testClass.creationDate) &&
                 Objects.equals(numberOfParticipants, testClass.numberOfParticipants) &&
